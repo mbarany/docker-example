@@ -1,0 +1,6 @@
+#!/bin/sh
+
+while true; do
+  echo "Doing work..."
+  sleep 5
+done

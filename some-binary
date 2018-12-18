@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "Hello from some-binary"
+echo "Your OS info: $(uname -rs)"
