@@ -104,7 +104,112 @@ docker logs -f nginx
 docker logs -f --tail 50 nginx
 ```
 
-## More to come...
+
+# Part 2
+
+
+## port bindings
+```bash
+# Publish all
+docker run --rm -d --name nginx -P nginx
+# Publish list
+docker run --rm -d --name nginx -p 80 nginx
+docker run --rm -d --name nginx -p 9999:80 nginx
+```
+
+
+## volumes
+```bash
+# List volumes
+docker volume ls
+# Map volume
+docker run --rm -it --name myapp -v "$(pwd)":/app alpine
+# Make it read only
+docker run --rm -it --name myapp -v "$(pwd)":/app:ro alpine
+# Create a volume
+docker volume create foobar
+docker run --rm -it --name myapp -v foobar:/app/foobar alpine
+```
+
+
+## docker-compose
+```yaml
+version: '3.4'
+
+services:
+  app:
+    build: .
+    depends_on:
+     - db
+     - redis
+    volumes:
+      - ./:/app
+    environment:
+      FOOBAR: bar
+    env_file:
+      - .env
+
+  db:
+    image: postgres:10-alpine
+
+  redis:
+    image: redis:alpine
+```
+https://docs.docker.com/compose/compose-file/
+
+`docker-compose up -d`
+
+
+# Part 3
+
+
+## docker-compose examples
+View advanced examples of docker-compose.yml files
+
+
+## networking
+https://docs.docker.com/network/
+- host
+- bridge
+- none
+```bash
+# List networks
+docker network ls
+# Create network
+docker network create foo
+# Delete network
+docker network rm foo
+```
+
+
+## restart policy
+https://docs.docker.com/compose/compose-file/compose-file-v2/#restart
+https://docs.docker.com/compose/compose-file/#restart_policy
+
+
+## Alpine
+Tiny linux distro. Perfect for a docker container base
+- `apk` Package manager
+
+
+## Entrypoint VS CMD
+https://stackoverflow.com/questions/21553353/what-is-the-difference-between-cmd-and-entrypoint-in-a-dockerfile/21564990#21564990
+
+
+## docker inspect
+```bash
+docker inspect mbarany/docker-example
+# brew install dive
+dive mbarany/docker-example
+```
+
+## Scratch
+This is where all docker images begin
+https://hub.docker.com/_/scratch
+
+
+## Other docker things
+- https://github.com/veggiemonk/awesome-docker
 
 
 # License
@@ -121,4 +226,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
